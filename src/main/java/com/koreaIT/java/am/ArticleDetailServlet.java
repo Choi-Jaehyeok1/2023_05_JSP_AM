@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Map;
 
 import com.koreaIT.java.am.util.DBUtil;
@@ -16,8 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/list")
-public class ArticleListServlet extends HttpServlet {
+@WebServlet("/article/detail")
+public class ArticleDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,16 +27,20 @@ public class ArticleListServlet extends HttpServlet {
 			
 			conn = DriverManager.getConnection(url, "root", "");
 			
+			int id = Integer.parseInt(request.getParameter("id"));
+			
 			SecSql sql = new SecSql();
-			sql.append("SELECT *");
+			sql.append("SELECT *");  
 			sql.append("FROM article");
-			sql.append("ORDER BY id DESC");
+			sql.append("WHERE A.id = ?", id);
+
+			DBUtil.selectRow(conn, sql);
 			
-			List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);
+			Map<String, Object> articleMap = DBUtil.selectRow(conn, sql);
 			
-			request.setAttribute("articleListMap", articleListMap);
+			request.setAttribute("articleMap", articleMap);
 			
-			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
+			request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");
@@ -53,5 +56,4 @@ public class ArticleListServlet extends HttpServlet {
 			}
 		}
 	}
-
 }
