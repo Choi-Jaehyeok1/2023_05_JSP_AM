@@ -30,11 +30,9 @@ public class ArticleDetailServlet extends HttpServlet {
 			int id = Integer.parseInt(request.getParameter("id"));
 			
 			SecSql sql = new SecSql();
-			sql.append("SELECT *");  
+			sql.append("SELECT *");
 			sql.append("FROM article");
-			sql.append("WHERE A.id = ?", id);
-
-			DBUtil.selectRow(conn, sql);
+			sql.append("WHERE id = ?", id);
 			
 			Map<String, Object> articleMap = DBUtil.selectRow(conn, sql);
 			
@@ -56,4 +54,5 @@ public class ArticleDetailServlet extends HttpServlet {
 			}
 		}
 	}
+
 }
