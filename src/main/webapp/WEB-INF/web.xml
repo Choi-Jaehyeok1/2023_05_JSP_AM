@@ -29,4 +29,14 @@
     <servlet-name>ArticleListServlet</servlet-name>
     <url-pattern>/ArticleListServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>text</display-name>
+    <servlet-name>text</servlet-name>
+    <servlet-class>com.koreaIT.java.am.text</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>text</servlet-name>
+    <url-pattern>/text</url-pattern>
+  </servlet-mapping>
 </web-app>
