@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.koreaIT.java.am.config.Config;
 import com.koreaIT.java.am.util.DBUtil;
 import com.koreaIT.java.am.util.SecSql;
 
@@ -14,7 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/doModify")
+@WebServlet("/member/doJoin")
 public class ArticleDoModifyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -24,10 +25,10 @@ public class ArticleDoModifyServlet extends HttpServlet {
 		
 		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			String url = "jdbc:mysql://127.0.0.1:3306/jsp_article_manager?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
+			Class.forName(Config.getDBDriverName());
+			String url = Config.getDBUrl();
 			
-			conn = DriverManager.getConnection(url, "root", "");
+			conn = DriverManager.getConnection(url, Config.getDBUser(), Config.getDBPasswd());
 			
 			int id = Integer.parseInt(request.getParameter("id"));
 			String title = request.getParameter("title");

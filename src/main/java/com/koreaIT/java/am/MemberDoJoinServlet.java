@@ -15,8 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/doWrite")
-public class ArticleDoWriteServlet extends HttpServlet {
+@WebServlet("/member/doJoin")
+public class MemberDoJoinServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,19 +30,21 @@ public class ArticleDoWriteServlet extends HttpServlet {
 			
 			conn = DriverManager.getConnection(url, Config.getDBUser(), Config.getDBPasswd());
 			
-			String title = request.getParameter("title");
-			String body = request.getParameter("body");
+			String loginId = request.getParameter("loginId");
+			String loginPw = request.getParameter("loginPw");
+			String name = request.getParameter("name");
 			
 			SecSql sql = new SecSql();
-			sql.append("INSERT INTO article");
+			sql.append("INSERT INTO `member`");
 			sql.append("SET regDate = NOW()");
 			sql.append(", updateDate = NOW()");
-			sql.append(", title = ?", title);
-			sql.append(", `body` = ?", body);
+			sql.append(", loginId = ?", loginId);
+			sql.append(", loginPw = ?", loginPw);
+			sql.append(", `name` = ?", name);
 			
-			int id = DBUtil.insert(conn, sql);
+			DBUtil.insert(conn, sql);
 			
-			response.getWriter().append(String.format("<script>alert('%d번 게시글이 생성 되었습니다'); location.replace('list');</script>", id));
+			response.getWriter().append(String.format("<script>alert('%s님 환영합니다.'); location.replace('../home/main');</script>", loginId));
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");
@@ -58,9 +60,8 @@ public class ArticleDoWriteServlet extends HttpServlet {
 			}
 		}
 	}
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }

@@ -39,4 +39,34 @@
     <servlet-name>text</servlet-name>
     <url-pattern>/text</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Config</display-name>
+    <servlet-name>Config</servlet-name>
+    <servlet-class>com.koreaIT.java.am.config.Config</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Config</servlet-name>
+    <url-pattern>/Config</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Config2</display-name>
+    <servlet-name>Config2</servlet-name>
+    <servlet-class>com.koreaIT.java.am.config.Config2</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Config2</servlet-name>
+    <url-pattern>/Config2</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Config3</display-name>
+    <servlet-name>Config3</servlet-name>
+    <servlet-class>com.koreaIT.java.am.config.Config3</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Config3</servlet-name>
+    <url-pattern>/Config3</url-pattern>
+  </servlet-mapping>
 </web-app>
