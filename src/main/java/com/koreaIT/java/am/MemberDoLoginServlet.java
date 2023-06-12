@@ -15,6 +15,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/member/doLogin")
 public class MemberDoLoginServlet extends HttpServlet {
@@ -33,25 +34,27 @@ public class MemberDoLoginServlet extends HttpServlet {
 			
 			String loginId = request.getParameter("loginId");
 			String loginPw = request.getParameter("loginPw");
-
+			
 			SecSql sql = new SecSql();
-			sql.append("SELECT *");
-			sql.append("FROM `member`");
+			sql.append("SELECT * FROM `member`");
 			sql.append("WHERE loginId = ?", loginId);
 			
 			Map<String, Object> memberRow = DBUtil.selectRow(conn, sql);
 			
-			if(memberRow.isEmpty()) {
-				response.getWriter().append(String.format("<script>alert('%s은(는) 존재하지 않는 아이디입니다.'); location.replace('lgoin');</script>", loginId));
+			if (memberRow.isEmpty()) {
+				response.getWriter().append(String.format("<script>alert('%s은(는) 존재하지 않는 아이디입니다'); location.replace('login');</script>", loginId));
 				return;
 			}
 			
-			if(memberRow.get("loginPw").equals(loginPw) == false) {
-				response.getWriter().append(String.format("<script>alert('비밀번호를 확인해주세요'); location.replace('lgoin');</script>"));
+			if (memberRow.get("loginPw").equals(loginPw) == false) {
+				response.getWriter().append(String.format("<script>alert('비밀번호가 일치하지 않습니다'); location.replace('login');</script>"));
 				return;
 			}
 			
-			response.getWriter().append(String.format("<script>alert('%s님 환영합니다.'); location.replace('../home/main');</script>", loginId));
+			HttpSession session = request.getSession();
+			session.setAttribute("loginedMemberId", memberRow.get("id"));
+			
+			response.getWriter().append(String.format("<script>alert('%s님 환영합니다~'); location.replace('../home/main');</script>", memberRow.get("name")));
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");
@@ -67,8 +70,9 @@ public class MemberDoLoginServlet extends HttpServlet {
 			}
 		}
 	}
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
+	
 }
