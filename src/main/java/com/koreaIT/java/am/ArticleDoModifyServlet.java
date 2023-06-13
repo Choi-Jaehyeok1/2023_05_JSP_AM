@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/member/doJoin")
+@WebServlet("/article/doModify")
 public class ArticleDoModifyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
