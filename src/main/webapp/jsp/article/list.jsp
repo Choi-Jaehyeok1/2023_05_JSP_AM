@@ -9,7 +9,6 @@
 	int totalPage = (int) request.getAttribute("totalPage");
 	int from = (int) request.getAttribute("from");
 	int end = (int) request.getAttribute("end");
-	int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 %>
 
 <!DOCTYPE html>
@@ -22,6 +21,8 @@
 	<h1>게시물 리스트</h1>
 	
 	<div><a href="../home/main">메인</a></div>
+	<%@ include file="../common/topBar.jsp" %>
+	
 	<%
 		if (loginedMemberId != -1) {
 	%>
@@ -29,6 +30,7 @@
 	<% 	
 		}
 	%>
+	
 	
 	<table border="1">
 		<colgroup>
@@ -50,7 +52,6 @@
 			<td><%= articleMap.get("regDate") %></td>
 			<td><a href="detail?id=<%= articleMap.get("id") %>"><%= articleMap.get("title") %></a></td>
 			<td><%= articleMap.get("writerName") %></td>
-			
 		</tr>
 		<%
  			}
